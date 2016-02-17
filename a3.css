@@ -1,6 +1,5 @@
-h1, h3 {
-	text-align: center;
-}
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
 
 .background {
   fill: none;
@@ -22,4 +21,29 @@ h1, h3 {
   stroke-linejoin: round;
   stroke-linecap: round;
   pointer-events: none;
+}
+
+body {
+    font-family: 'Poiret One', cursive;
+    font-size: 18px;
+    font-weight: 300;
+    background: #2b2626;
+    color: #ffffff;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 500;
+}
+
+h2 {
+    text-align: center;
+}
+
+#box {
+    margin-top: 10px;
+    text-align: center;
+    align: center;
+    border-style: solid;
+    border-color: goldenrod;
 }
