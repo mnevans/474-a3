@@ -9,6 +9,7 @@
 	// then do stuff in here
 
 d3.select("body").append("h1").text("INFO 474 Assignment 3");
+d3.select("body").append("h3").text("Morgan Evans + Jessie Peterson");
 
 var margin = {top: 20, right:15, bottom: 60, left: 60}
 	, width = 960 - margin.left - margin.right
@@ -27,7 +28,7 @@ d3.select("body").append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom);
 
-d3.csv("titanic.csv", type, function(error, dataset) {
+d3.csv("baseball.csv", type, function(error, dataset) {
 
 	console.log(dataset)
 	xScale.domain([0, d3.max(dataset, function (d){
