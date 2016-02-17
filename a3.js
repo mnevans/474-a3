@@ -8,8 +8,8 @@
 // load in CSV data
 	// then do stuff in here
 
-d3.select("body").append("h1").text("INFO 474 Assignment 3");
-d3.select("body").append("h3").text("Morgan Evans + Jessie Peterson");
+//d3.select("body").append("h1").text("| Professional Baseball: Variations in teams, salaries, and awards won |");
+//d3.select("body").append("h3").text("Morgan Evans + Jessie Peterson");
 
 var width = 960,
     height = 500,
