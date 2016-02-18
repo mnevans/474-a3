@@ -46,9 +46,10 @@ d3.json("us-states.topo.json", function(error, us) {
   svg.selectAll(".state")
     .data(topojson.feature(us, us.objects.state).features)
     .enter().append("path")
-      .attr("class", function(d) { return "state state-border " + d.id; })
+      .attr("class", function(d) { return "state state-borders " + d.id; })
+      .attr("id", function(d){ return d.properties.NAME10})
       .attr("d", path)
-      .attr("id", "state-borders")
+      
 
       // add mouseevents here 
       // .on("click", clicked), etc
