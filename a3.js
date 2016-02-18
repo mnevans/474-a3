@@ -8,9 +8,6 @@
 // load in CSV data
 	// then do stuff in here
 
-//d3.select("body").append("h1").text("| Professional Baseball: Variations in teams, salaries, and awards won |");
-//d3.select("body").append("h3").text("Morgan Evans + Jessie Peterson");
-
 var width = 960,
     height = 500,
     centered;
@@ -94,3 +91,63 @@ function clicked(d) {
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
       .style("stroke-width", 1.5 / k + "px");
 }
+
+
+var margin = {top: 20, right:15, bottom: 60, left: 60}
+	, width = 960 - margin.left - margin.right
+	, height = 500 - margin.top - margin.bottom;
+
+var xScale = d3.scale.linear()
+			.range([0, width])		
+			//.domain()
+
+var yScale = d3.scale.linear()
+			.range([height, 0])
+			//.domain()
+
+d3.select("body").append("svg")
+	.attr("class", "chart")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom);
+
+d3.csv("baseball2.csv", type, function(error, dataset) {
+
+	console.log(dataset)
+	xScale.domain([0, d3.max(dataset, function (d){
+		return d.year
+	})])
+
+	yScale.domain([0, d3.max(dataset, function (d){
+		return d.salary
+	})])
+
+	d3.select(".chart").selectAll(".circle")
+		.data(dataset)
+		.enter().append("circle")
+		.attr("class", ".circle")
+		.attr("r", 3)
+		.attr("cx", function(d) {
+			return xScale(d.year)
+		})
+		.attr("cy", function(d) {
+			return yScale(d.salary)
+		})
+		.attr("fill", "blue")
+
+	/*var brush = d3.svg.brush()
+ 		.x(x)
+ 		.on("brush", brushmove)
+ 		.on("brushend", brushend);*/ 
+
+	svg.append("g")
+ 		.attr("class", "brush")
+ 		.call(brush)
+		.selectAll('rect')
+		.attr('height', height);
+});
+
+function type(d) {
+	d.year = +d.year;
+	d.salary = +d.salary;
+	return d
+} 
