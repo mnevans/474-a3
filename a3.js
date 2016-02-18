@@ -34,10 +34,30 @@ svg.append("rect")
 
 var g = svg.append("g");
 
-d3.json("us-10m.json", function(error, us) {
+d3.json("us-states.topo.json", function(error, us) {
   if (error) throw error;
 
-  g.append("g")
+  console.log(us.objects)
+
+  // appends the USA path first
+  svg.append("path")
+        .datum(topojson.feature(us, us.objects.state))
+        .attr("d", path)
+        .attr("class", "usa");
+
+  // appends each state svg and gives it a class of it's id
+  svg.selectAll(".state")
+    .data(topojson.feature(us, us.objects.state).features)
+    .enter().append("path")
+      .attr("class", function(d) { return "state state-border " + d.id; })
+      .attr("d", path)
+      .attr("id", "state-borders")
+      // add mouseevents here 
+      // .on("click", clicked), etc
+      // your current clicked func won't do anything, though
+      // you'll have to write something new probably
+
+  /*g.append("g")
       .attr("id", "states")
     .selectAll("path")
       .data(topojson.feature(us, us.objects.states).features)
@@ -46,9 +66,9 @@ d3.json("us-10m.json", function(error, us) {
       .on("click", clicked);
 
   g.append("path")
-      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      .datum(topojson.mesh(us, us.objects))
       .attr("id", "state-borders")
-      .attr("d", path);
+      .attr("d", path);*/
 });
 function clicked(d) {
   var x, y, k;
