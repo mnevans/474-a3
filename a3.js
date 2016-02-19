@@ -1,5 +1,4 @@
 $(document).ready(function()	{
-	
 	var margin = {
 		top : 20,
 		right : 20,
@@ -13,7 +12,7 @@ $(document).ready(function()	{
 	var y = d3.scale.linear()
 		.range([height, 0]);
 
-	var formatCurrency = d3.format(",");
+	//var formatCurrency = d3.format(",");
 
 	var div = d3.select("body")
 		.append("div")
@@ -48,7 +47,11 @@ $(document).ready(function()	{
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv("data.csv", function(error, data) {
+	  var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  d3.csv("data.csv", function(error, data) {
 
 		x.domain([0, 23]).nice();
 		y.domain([0, 7000000]).nice();
@@ -59,19 +62,19 @@ $(document).ready(function()	{
 			.attr("transform", "translate(0," + height + ")")
 			.call(xAxis)
 			.append("text")
-				.attr("fill", "white")
+				.attr("fill", "black")
 				.attr("class", "label")
 				.attr("x", width)
 				.attr("y", -6)
 				.style("text-anchor", "end")
-				.text("Team");
+				.text("Team ID");
 
 		//y axis
 		svg.append("g")
 			.attr("class", "y axis")
 			.call(yAxis)
 			.append("text")
-				.attr("fill", "white")
+				.attr("fill", "black")
 				.attr("class", "label")
 				.attr("transform", "rotate(-90)")
 				.attr("y", 6)
@@ -97,15 +100,24 @@ $(document).ready(function()	{
 					function(d) {
 						return y(d.y2014);
 					})
-				.style("fill", "red")
- 				.on("mouseover", function(){ // when I use .style("fill", "red") here, it works 
-               		d3.select(this)
-                   .style("fill", "blue");
-         		})
-          		.on("mouseout", function(){ 
-               		d3.select(this)
-                   .style("fill", "red");
-         });
+				.style("fill", "dodgerblue")
+        .on("mouseover", function(d) {
+          d3.select(this)
+            .style("fill", "white");
+          tooltip.transition()
+            .duration(200)
+            .style("opacity", .9);
+          tooltip.html(d["team"] + "<br/> " + "Avg. Salary: $")
+              .style("left", (d3.event.pageX + 5) + "px")
+              .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+          d3.select(this)
+            .style("fill", "dodgerblue");
+          tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
+        });
 				
 		var running = false;
 		var timer;
@@ -148,9 +160,10 @@ $(document).ready(function()	{
 			clearInterval(timer);
 			$("button").html("Play");
 		});
+
 	
 		update = function() {
-		
+
 			d3.selectAll(".dot")
 				.transition()
 				.duration(500)
@@ -158,7 +171,7 @@ $(document).ready(function()	{
 			
 					switch ($("#slider").val()) {
 						case "1985":
-							return y(d.y1985);
+              return y(d.y1985);
 							break;
 						case "1986":
 							return y(d.y1986);
@@ -254,10 +267,10 @@ $(document).ready(function()	{
 				.attr("cx", function(d) {
 					switch ($("#slider").val()) {
 						case "1985":
-							return x(d.id);
+              return x(d.id);
 							break;
 						case "1986":
-							return x(d.id);
+              return x(d.id);
 							break;
 						case "1987":
 							return x(d.id);

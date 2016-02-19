@@ -3,11 +3,11 @@
 
   body {
     font: 16px sans-serif;
-    background-image: url(bg.png);
+    background-image: url(bg2.png);
     background-repeat: no-repeat;
-    background-size: 1400 px 2000px
+    background-attachment: cover;
     background-attachment: fixed;
-    color: #ffffff
+    color: #000000;
   }
 
   .axis path, .axis line {
@@ -120,6 +120,11 @@
   h1, h2 {
     font-family: 'Shadows Into Light Two', cursive;
     text-align: center;
+    color: #000000;
+  }
+
+  h2 {
+    background-color: dodgerblue;
   }
 
   h4 {
