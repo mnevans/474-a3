@@ -1,163 +1,350 @@
-// set your margins and chart width/height
+$(document).ready(function()	{
+	
+	var margin = {
+		top : 20,
+		right : 20,
+		bottom : 30,
+		left : 40
+	}, width = 725 - margin.left - margin.right, height = 600 - margin.top - margin.bottom;
 
+	var x = d3.scale.linear()
+		.range([0, width]);
+	
+	var y = d3.scale.linear()
+		.range([height, 0]);
 
-// create your scales 
-// these map your data -> width + height of your webpage
+	var formatCurrency = d3.format(",");
 
+	var div = d3.select("body")
+		.append("div")
+			.attr("id", "teaminfo")
+			.style("opacity", 0);
 
-// load in CSV data
-	// then do stuff in here
+	//var color = d3.scale.category10();
+	var color = d3.scale.ordinal()
+		.domain([1, 2, 3])
+		.range(["rgb(53,135,212)", "rgb(77, 175, 74)", "rgb(228, 26, 28)"]);
 
-var width = 960,
-    height = 500,
-    centered;
+            var labels = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"];
+			var xScale = d3.scale.ordinal()
+            .domain(labels).rangePoints([0, width]);
+			
+			//.rangeRoundBands([margin.left, width], 0.05);
 
-var projection = d3.geo.albersUsa()
-    .scale(1070)
-    .translate([width / 2, height / 2]);
+	var xAxis = d3.svg.axis()
+		.scale(x)
+		.orient("bottom");
 
-var path = d3.geo.path()
-    .projection(projection);
+	var yAxis = d3.svg.axis()
+		.scale(y)
+		.orient("left");
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+	var svg = d3.select("#chart")
+		.append("svg")
+			.attr("class", "chart")
+			.attr("viewBox", "0 0 725 600")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.append("rect") //append path?
-    .attr("class", "background")
-    .attr("width", width)
-    .attr("height", height)
-    //.on("click", clicked);
+	d3.csv("data.csv", function(error, data) {
 
-var g = svg.append("g");
+		x.domain([0, 23]).nice();
+		y.domain([0, 7000000]).nice();
 
-d3.json("us-states.topo.json", function(error, us) {
-  if (error) throw error;
+		//x axis
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis)
+			.append("text")
+				.attr("fill", "white")
+				.attr("class", "label")
+				.attr("x", width)
+				.attr("y", -6)
+				.style("text-anchor", "end")
+				.text("Team");
 
-  console.log(us.objects)
+		//y axis
+		svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis)
+			.append("text")
+				.attr("fill", "white")
+				.attr("class", "label")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 6)
+				.attr("dy", ".71em")
+				.style("text-anchor", "end")
+				.text("Average Salary")
 
-  // appends the USA path first
-  svg.append("path")
-        .datum(topojson.feature(us, us.objects.state))
-        .attr("d", path)
-        .attr("class", "usa");
-
-  // appends each state svg and gives it a class of it's id
-  svg.selectAll(".state")
-    .data(topojson.feature(us, us.objects.state).features)
-    .enter().append("path")
-      .attr("class", function(d) { return "state state-borders " + d.id; })
-      .attr("id", function(d){ return d.properties.NAME10})
-      .attr("d", path)
-      
-
-      // add mouseevents here 
-      // .on("click", clicked), etc
-      // your current clicked func won't do anything, though
-      // you'll have to write something new probably
-
-  /*g.append("g")
-      .attr("id", "states")
-    .selectAll("path")
-      .data(topojson.feature(us, us.objects.states).features)
-    .enter().append("path")
-      .attr("d", path)
-      .on("click", clicked);
-
-  g.append("path")
-      .datum(topojson.mesh(us, us.objects))
-      .attr("id", "state-borders")
-      .attr("d", path);*/
+		//draw circles
+		svg.selectAll(".dot")
+			.data(data.sort(
+				function(a, b) {
+					return b.totalSalary - a.totalSalary;
+				})) 
+			.enter()
+			.append("circle")
+				.attr("class", "dot")
+				.attr("r", 10)
+				.attr("cx", 
+					function(d) {
+						return x(d.id);
+					})
+				.attr("cy", 
+					function(d) {
+						return y(d.y2014);
+					})
+				.style("fill", "red")
+ 				.on("mouseover", function(){ // when I use .style("fill", "red") here, it works 
+               		d3.select(this)
+                   .style("fill", "blue");
+         		})
+          		.on("mouseout", function(){ 
+               		d3.select(this)
+                   .style("fill", "red");
+         });
+				
+		var running = false;
+		var timer;
+		
+		$("button").on("click", function() {
+		
+			var duration = 1000,
+				maxstep = 2011,
+				minstep = 2000;
+			
+			if (running == true) {
+			
+				$("button").html("Play");
+				running = false;
+				clearInterval(timer);
+				
+			} else if (running == false) {
+			
+				$("button").html("Pause");
+				
+				sliderValue = $("#slider").val();
+				
+				timer = setInterval( function(){
+						if (sliderValue < maxstep){
+							sliderValue++;
+							$("#slider").val(sliderValue);
+							$('#range').html(sliderValue);
+						}
+						$("#slider").val(sliderValue);
+						update();
+					
+				}, duration);
+				running = true;
+			}
+		});
+	
+		$("#slider").on("change", function(){
+			update();
+			$("#range").html($("#slider").val());
+			clearInterval(timer);
+			$("button").html("Play");
+		});
+	
+		update = function() {
+		
+			d3.selectAll(".dot")
+				.transition()
+				.duration(500)
+				.attr("cy", function(d) {
+			
+					switch ($("#slider").val()) {
+						case "1985":
+							return y(d.y1985);
+							break;
+						case "1986":
+							return y(d.y1986);
+							break;
+						case "1987":
+							return y(d.y1987);
+							break;
+						case "1988":
+							return y(d.y1988);
+							break;
+						case "1989":
+							return y(d.y1989);
+							break;
+						case "1990":
+							return y(d.y1990);
+							break;
+						case "1991":
+							return y(d.y1991);
+							break;
+						case "1992":
+							return y(d.y1992);
+							break;
+						case "1993":
+							return y(d.y1993);
+							break;
+						case "1994":
+							return y(d.y1994);
+							break;
+						case "1995":
+							return y(d.y1995);
+							break;
+						case "1996":
+							return y(d.y1996);
+							break;
+						case "1997":
+							return y(d.y1997);
+							break;
+						case "1998":
+							return y(d.y1998);
+							break;
+						case "1999":
+							return y(d.y1999);
+							break;
+						case "2000":
+							return y(d.y2000);
+							break;
+						case "2001":
+							return y(d.y2001);
+							break;
+						case "2002":
+							return y(d.y2002);
+							break;
+						case "2003":
+							return y(d.y2003);
+							break;
+						case "2004":
+							return y(d.y2004);
+							break;
+						case "2005":
+							return y(d.y2005);
+							break;
+						case "2006":
+							return y(d.y2006);
+							break;
+						case "2007":
+							return y(d.y2007);
+							break;
+						case "2008":
+							return y(d.y2008);
+							break;
+						case "2009":
+							return y(d.y2009);
+							break;
+						case "2010":
+							return y(d.y2010);
+							break;
+						case "2011":
+							return y(d.y2011);
+							break;
+						case "2012":
+							return y(d.y2012);
+							break;
+						case "2013":
+							return y(d.y2013);
+							break;
+						case "2014":
+							return y(d.y2014);
+							break;
+					}
+				})
+				.transition()
+				.duration(500)
+				.attr("cx", function(d) {
+					switch ($("#slider").val()) {
+						case "1985":
+							return x(d.id);
+							break;
+						case "1986":
+							return x(d.id);
+							break;
+						case "1987":
+							return x(d.id);
+							break;
+						case "1988":
+							return x(d.id);
+							break;
+						case "1989":
+							return x(d.id);
+							break;
+						case "1990":
+							return x(d.id);
+							break;
+						case "1991":
+							return x(d.id);
+							break;
+						case "1992":
+							return x(d.id);
+							break;
+						case "1993":
+							return x(d.id);
+							break;
+						case "1994":
+							return x(d.id);
+							break;
+						case "1995":
+							return x(d.id);
+							break;
+						case "1996":
+							return x(d.id);
+							break;
+						case "1997":
+							return x(d.id);
+							break;
+						case "1998":
+							return x(d.id);
+							break;
+						case "1999":
+							return x(d.id);
+							break;
+						case "2000":
+							return x(d.id);
+							break;
+						case "2001":
+							return x(d.id);
+							break;
+						case "2002":
+							return x(d.id);
+							break;
+						case "2003":
+							return x(d.id);
+							break;
+						case "2004":
+							return x(d.id);
+							break;
+						case "2005":
+							return x(d.id);
+							break;
+						case "2006":
+							return x(d.id);
+							break;
+						case "2007":
+							return x(d.id);
+							break;
+						case "2008":
+							return x(d.id);
+							break;
+						case "2009":
+							return x(d.id);
+							break;
+						case "2010":
+							return x(d.id);
+							break;
+						case "2011":
+							return x(d.id);
+							break;
+						case "2012":
+							return x(d.id);
+							break;
+						case "2013":
+							return x(d.id);
+							break;
+						case "2014":
+							return x(d.id);
+							break;
+					}
+				});
+		};
+	});
 });
-
-function clicked(d) {
-  var x, y, k;
-
-  if (d && centered !== d) {
-    var centroid = path.centroid(d);
-    x = centroid[0];
-    y = centroid[1];
-    k = 4;
-    centered = d;
-  } else {
-    x = width / 2;
-    y = height / 2;
-    k = 1;
-    centered = null;
-  } 
-
-  g.selectAll("path")
-      .classed("active", centered && function(d) { return d === centered; });
-
-  g.transition()
-      .duration(750)
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-      .style("stroke-width", 1.5 / k + "px");
-}
-
-
-
-
-var margin = {top: 20, right:15, bottom: 60, left: 60}
-	, width = 960 - margin.left - margin.right
-	, height = 500 - margin.top - margin.bottom;
-
-var xScale = d3.scale.linear()
-			.range([0, width])		
-			//.domain()
-
-var yScale = d3.scale.linear()
-			.range([height, 0])
-			//.domain()
-
-d3.select(".state").append("svg")
-	.attr("class", ".state")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom);
-
-d3.csv("baseball2.csv", type, function(error, dataset) {
-
-	console.log(dataset)
-
-	xScale.domain([0, d3.max(dataset, function (d){
-		return d.year
-	})])
-
-	yScale.domain([0, d3.max(dataset, function (d){
-		return d.salary
-	})])
-
-	/*d3.select(".state").selectAll(".circle")
-		.data(dataset)
-		.enter().append("circle")
-		.attr("class", ".circle")
-		.attr("r", 3)
-		.attr("cx", function(d) {
-			return xScale(d.year)
-		})
-		.attr("cy", function(d) {
-			return yScale(d.salary)
-		})
-		.attr("fill", "blue")*/
-
-	/*var brush = d3.svg.brush()
- 		.x(x)
- 		.on("brush", brushmove)
- 		.on("brushend", brushend);*/
-
-	svg.append("g")
- 		.attr("class", ".state")
- 		//.call(brush)
-		.selectAll('rect')
-		.attr('height', height);
-});
-
-function type(d) {
-	d.latitude = +d.latitude;
-  d.longitude = +d.longitude;
-  d.team = d.team;
-  d.year = +d.year;
-	d.salary = +d.salary;
-	return d
-} 
-
