@@ -28,8 +28,6 @@ $(document).ready(function()	{
             var labels = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"];
 			var xScale = d3.scale.ordinal()
             .domain(labels).rangePoints([0, width]);
-			
-			//.rangeRoundBands([margin.left, width], 0.05);
 
 	var xAxis = d3.svg.axis()
 		.scale(x)
@@ -48,9 +46,9 @@ $(document).ready(function()	{
 		.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	  var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+	var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
   d3.csv("data.csv", function(error, data) {
 
@@ -81,10 +79,10 @@ $(document).ready(function()	{
 				.attr("y", 6)
 				.attr("dy", ".71em")
 				.style("text-anchor", "end")
-				.text("Average Salary")
+				.text("Average Salary ($)")
 
 		//draw circles
-		svg.selectAll(".dot")
+        svg.selectAll(".dot")
 			.data(data.sort(
 				function(a, b) {
 					return b.totalSalary - a.totalSalary;
@@ -99,7 +97,7 @@ $(document).ready(function()	{
 					})
 				.attr("cy", 
 					function(d) {
-						return y(d.y2014);
+						return y(d.y1985);
 					})
 				.style("fill", "dodgerblue")
         .on("mouseover", function(d) {
@@ -161,9 +159,7 @@ $(document).ready(function()	{
 			clearInterval(timer);
 			$("button").html("Play");
 		});
-
-    var isSalary = true;
-		var salary = function(d) {
+        var salary = function(d) {
       
           switch ($("#slider").val()) {
             case "1985":
@@ -258,9 +254,6 @@ $(document).ready(function()	{
               break;
           }
         };
-        if (salary(d) == 0) {
-          isSalary = false;
-        }
 
     update = function() {
 

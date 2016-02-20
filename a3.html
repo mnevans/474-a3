@@ -34,37 +34,39 @@
 <body>
     <div id="box" style="text-align: center;">
         <h1 id="title">Professional Baseball: Variations in teams and salaries over time</h1>
-        <h3>Morgan Evans + Jessie Peterson</h3>
+        <h3>INFO 474 | Morgan Evans + Jessie Peterson</h3>
         <br />
     </div>
 
     <div class="container">
         <div class="col-sm-6">
             <h2>Data Domain</h2>
-            <p> 
+            <p class ="description"> 
             We decided to create an interactive data visualization utilizing data about Major League Baseball players and their salaries over time. This data seemed like a good project domain to pursue because it was data one of us has already worked with before (for Assignment 2), and because it was already manipulated and organized in the correct format to properly display the information to the users that was intended. Aside from already having experience with this data, we thought it would be interesting to display this data interactively, to help users visually see how the average player’s salary varied among different teams and over the span of 29 years. Although this data was used for Assignment 2, we wanted to see how the data visualizations would change was interactivity was introduced.
             <br /><br />
             Originally, in terms of interactive visualization brainstorming, we envisioned creating a map of the United States, and plotting the average player salary per team according to the latitude and longitude coordinates of their team’s hometown. For each data point, we wanted to include the visual encoding of area (for each data point) to represent the variation in each team’s average salary for that year. We also wanted to incorporate a filter of some sort, specifically by year, so users could interact with the visualization and give them the opportunity to focus on data of a specific year(s), as well as tooltips to allow users to read the data specific to each data point. Because this visualization incorporated multiple visual encodings such as position and area, we felt like it was conceptually strong enough to move forward into implementation using D3. Once we began working with D3 however, we ran into some problems and our design process came to a halt. We were able to project a map of the United States, however, had a lot of trouble mapping the data in our CSV and JSON file to the map. Eventually, we were able to plot data points onto the map, however, could not get it to successfully work for every data point and without manually coding each data object into the Javascript file. From that point, we spent endless hours unable to successfully create the visualization we were hoping for -- so we moved on.
             <br /><br />
             Now that we were back at the beginning of the design process for this assignment, we tried to brainstorm other possible visualizations that could still be effective in displaying our data, but could be more intuitive to implement. We decided it would be interesting to add the element of interactivity to a scatter plot. A scatter plot does an effective job of showing a lot of data, but sometimes can be not as visually stimulating as other data visualizations, so we took that as a challenge to try to make it more engaging by adding a component of interactivity. We created a storyboard that included a scatterplot with the average yearly salary on the y-axis, and each MLB team on the x-axis. We also included a filter on the field year, that would be color-labeled and allow users to choose any range of number of years to inspect the data on the visualization. We moved forward with this visualization because it incorporated multiple strong encodings such as position and color, and adding interactivity such as filtering the years (seasons) would allow an added level of complexity to the visualization, making it more interesting. 
-            <br /><br />
-            Once our data visualization was completed, we realized it somewhat differed from our original storyboard, however, still maintained the 
-            overall concept of our idea. We created an interactive scatter plot that displays each baseball team, and the average player salary for that team given a certain year. However, instead of using a filter like we originally planned, we incorporated a slider that represented the year. What was interesting about the slider, was that you could press play, and it would show an animation from the starting year of our data to the end year, displaying almost a “story” of how the average salary per player varied by team over time. It also allows the user to specify a year that they want to look at, and that they can change given the slider. Adding this component of user control allows users to interact with our visualization and control what they want to see. Unlike our storyboard, we did not include color to specify the year being displayed. Because we have a slider, the user cannot see multiple years at once, but only see how it changes over time. However, they can easily compare two years by utilizing the slider.
             </p>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" style="text-align: center">
             <h2>Storyboard 1</h2>
-            <img src="storyboard.png" alt="" width="500px;" height="400px;"/>
+            <img src="storyboard.png" style="margin-bottom: 50px" alt="" width="500px;" height="400px;"/>
 
             <h2>Storyboard 2</h2>
             <img src="storyboard2.png" alt="" width="500px;" height="400px;"/>
+            <br /><br /> <br /><br /> <br /><br /> <br /><br /> <br /><br />
+            <p class="description">
+            Once our data visualization was completed, we realized it somewhat differed from our original storyboard, however, still maintained the 
+            overall concept of our idea. We created an interactive scatter plot that displays each baseball team, and the average player salary for that team given a certain year. However, instead of using a filter like we originally planned, we incorporated a slider that represented the year. What was interesting about the slider, was that you could press play, and it would show an animation from the starting year of our data to the end year, displaying almost a “story” of how the average salary per player varied by team over time. It also allows the user to specify a year that they want to look at, and that they can change given the slider. Adding this component of user control allows users to interact with our visualization and control what they want to see. Unlike our storyboard, we did not include color to specify the year being displayed. Because we have a slider, the user cannot see multiple years at once, but only see how it changes over time. However, they can easily compare two years by utilizing the slider.
+            </p>
         </div>
     </div>
 
     <br />
 
     <div class="container">
-        <h2>Visualization</h2>
+        <h2>Visualization: Interactive Scatter Plot</h2>
     </div>
 
     <br />
