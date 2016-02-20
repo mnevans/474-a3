@@ -1,4 +1,5 @@
 $(document).ready(function()	{
+
 	var margin = {
 		top : 20,
 		right : 20,
@@ -107,7 +108,7 @@ $(document).ready(function()	{
           tooltip.transition()
             .duration(200)
             .style("opacity", .9);
-          tooltip.html(d["team"] + "<br/> " + "Avg. Salary: $")
+          tooltip.html("Team: " + d["team"] + "<br/> " + "Year: " + $("#slider").val() + "<br/> " + "Avg. Salary: $" + salary(d))
               .style("left", (d3.event.pageX + 5) + "px")
               .style("top", (d3.event.pageY - 28) + "px");
         })
@@ -161,8 +162,107 @@ $(document).ready(function()	{
 			$("button").html("Play");
 		});
 
-	
-		update = function() {
+    var isSalary = true;
+		var salary = function(d) {
+      
+          switch ($("#slider").val()) {
+            case "1985":
+              return d.y1985;
+              break;
+            case "1986":
+              return d.y1986;
+              break;
+            case "1987":
+              return d.y1987;
+              break;
+            case "1988":
+              return d.y1988;
+              break;
+            case "1989":
+              return d.y1989;
+              break;
+            case "1990":
+              return d.y1990;
+              break;
+            case "1991":
+              return d.y1991;
+              break;
+            case "1992":
+              return d.y1992;
+              break;
+            case "1993":
+              return d.y1993;
+              break;
+            case "1994":
+              return d.y1994;
+              break;
+            case "1995":
+              return d.y1995;
+              break;
+            case "1996":
+              return d.y1996;
+              break;
+            case "1997":
+              return d.y1997;
+              break;
+            case "1998":
+              return d.y1998;
+              break;
+            case "1999":
+              return d.y1999;
+              break;
+            case "2000":
+              return d.y2000;
+              break;
+            case "2001":
+              return d.y2001;
+              break;
+            case "2002":
+              return d.y2002;
+              break;
+            case "2003":
+              return d.y2003;
+              break;
+            case "2004":
+              return d.y2004;
+              break;
+            case "2005":
+              return d.y2005;
+              break;
+            case "2006":
+              return d.y2006;
+              break;
+            case "2007":
+              return d.y2007;
+              break;
+            case "2008":
+              return d.y2008;
+              break;
+            case "2009":
+              return d.y2009;
+              break;
+            case "2010":
+              return d.y2010;
+              break;
+            case "2011":
+              return d.y2011;
+              break;
+            case "2012":
+              return d.y2012;
+              break;
+            case "2013":
+              return d.y2013;
+              break;
+            case "2014":
+              return d.y2014;
+              break;
+          }
+        };
+        if (salary(d) == 0) {
+          isSalary = false;
+        }
+
+    update = function() {
 
 			d3.selectAll(".dot")
 				.transition()
