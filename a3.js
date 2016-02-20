@@ -9,6 +9,13 @@ $(document).ready(function()	{
 
 	var x = d3.scale.linear()
 		.range([0, width]);
+
+       /* var x = d3.scale.ordinal()
+            .domain(["Arizona Diamondbacks", "Atlanta Braves", "Baltimore Marylands", "Baltimore Orioles", "Boston Red Sox", "Cincinnati Reds", 
+                    "Cleveland Indians", "Colorado Rockies", "Detroit Tigers", "Florida Marlins", "Houston Astros", "Los Angeles Angels of Anaheim",
+                    "Los Angeles Dodgers", "Milwaukee Brewers", "Minnesota Twins", "New York Mets", "Oakland Athletics", "Philadelphia Phillies",
+                    "Pittsburgh Pirates", "San Francisco Giants", "Seattle Mariners", "Texas Rangers", "Toronto Blue Jays"])
+            .rangePoints([0, width]);*/
 	
 	var y = d3.scale.linear()
 		.range([height, 0]);
@@ -20,14 +27,9 @@ $(document).ready(function()	{
 			.attr("id", "teaminfo")
 			.style("opacity", 0);
 
-	//var color = d3.scale.category10();
 	var color = d3.scale.ordinal()
 		.domain([1, 2, 3])
 		.range(["rgb(53,135,212)", "rgb(77, 175, 74)", "rgb(228, 26, 28)"]);
-
-            var labels = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t"];
-			var xScale = d3.scale.ordinal()
-            .domain(labels).rangePoints([0, width]);
 
 	var xAxis = d3.svg.axis()
 		.scale(x)
@@ -360,10 +362,10 @@ $(document).ready(function()	{
 				.attr("cx", function(d) {
 					switch ($("#slider").val()) {
 						case "1985":
-              return x(d.id);
+                            return x(d.id);
 							break;
 						case "1986":
-              return x(d.id);
+                            return x(d.id);
 							break;
 						case "1987":
 							return x(d.id);

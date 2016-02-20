@@ -39,8 +39,9 @@
     </div>
 
     <div class="container">
+    <h2>Data Domain + Project Explanation</h2>
         <div class="col-sm-6">
-            <h2>Data Domain</h2>
+            
             <p class ="description"> 
             We decided to create an interactive data visualization utilizing data about Major League Baseball players and their salaries over time. This data seemed like a good project domain to pursue because it was data one of us has already worked with before (for Assignment 2), and because it was already manipulated and organized in the correct format to properly display the information to the users that was intended. Aside from already having experience with this data, we thought it would be interesting to display this data interactively, to help users visually see how the average player’s salary varied among different teams and over the span of 29 years. Although this data was used for Assignment 2, we wanted to see how the data visualizations would change was interactivity was introduced.
             <br /><br />
@@ -49,21 +50,32 @@
             Now that we were back at the beginning of the design process for this assignment, we tried to brainstorm other possible visualizations that could still be effective in displaying our data, but could be more intuitive to implement. We decided it would be interesting to add the element of interactivity to a scatter plot. A scatter plot does an effective job of showing a lot of data, but sometimes can be not as visually stimulating as other data visualizations, so we took that as a challenge to try to make it more engaging by adding a component of interactivity. We created a storyboard that included a scatterplot with the average yearly salary on the y-axis, and each MLB team on the x-axis. We also included a filter on the field year, that would be color-labeled and allow users to choose any range of number of years to inspect the data on the visualization. We moved forward with this visualization because it incorporated multiple strong encodings such as position and color, and adding interactivity such as filtering the years (seasons) would allow an added level of complexity to the visualization, making it more interesting. 
             </p>
         </div>
-        <div class="col-sm-6" style="text-align: center">
-            <h2>Storyboard 1</h2>
-            <img src="storyboard.png" style="margin-bottom: 50px" alt="" width="500px;" height="400px;"/>
 
-            <h2>Storyboard 2</h2>
-            <img src="storyboard2.png" alt="" width="500px;" height="400px;"/>
-            <br /><br /> <br /><br /> <br /><br /> <br /><br /> <br /><br />
+        <div class="col-sm-6" style="text-align: center">
             <p class="description">
             Once our data visualization was completed, we realized it somewhat differed from our original storyboard, however, still maintained the 
-            overall concept of our idea. We created an interactive scatter plot that displays each baseball team, and the average player salary for that team given a certain year. However, instead of using a filter like we originally planned, we incorporated a slider that represented the year. What was interesting about the slider, was that you could press play, and it would show an animation from the starting year of our data to the end year, displaying almost a “story” of how the average salary per player varied by team over time. It also allows the user to specify a year that they want to look at, and that they can change given the slider. Adding this component of user control allows users to interact with our visualization and control what they want to see. Unlike our storyboard, we did not include color to specify the year being displayed. Because we have a slider, the user cannot see multiple years at once, but only see how it changes over time. However, they can easily compare two years by utilizing the slider.
+            overall concept of our idea. We created an interactive scatter plot that displays each baseball team, and the average player salary for that team given a certain year. However, instead of using a filter like we originally planned, we incorporated a slider that represented the year. What was interesting about the slider, was that you could press play, and it would show an animation from the starting year of our data to the end year, displaying almost a “story” of how the average salary per player varied by team over time. It also allows the user to specify a year that they want to look at, and that they can change given the slider. Adding this component of user control allows users to interact with our visualization and control what they want to see. Unlike our storyboard, we did not include color to specify the year being displayed. Because we have a slider, the user cannot see multiple years at once, but only see how it changes over time. However, they can easily compare two years by utilizing the slider. However, they can easily compare two years by utilizing the slider and watching the data change. Furthermore, we implemented tooltips to display each team’s name, the year currently being displayed and the average salary respective to both that team and year. This tooltip can be displayed when the user hovers over the specific coordinate, which also changes color to white to emphasize that coordinate is selected. Our Y-axis data is the average salary and the X-axis is a “team ID” that we assigned to each team in our data set, while the actual team name is viewed in the tooltip. Overall, we are very satisfied with this visualization and how it turned out after the several previous iterations.
+            <br /><br />
+            Workload: The workload was divided fairly evenly, while Jessie created the storyboards and the majority of the write up, with some HTML/CSS help. Both of us conducted research on D3 and other related JavaScript elements, and Morgan helped with implementation of this code. We worked on this entirely together and at the same time to make sure that the workload was not dependent on just one team member. Overall, we worked well as a team and this assignment was a challenging, yet enjoyable experience.
             </p>
+            <br /><br />
+            <img src="baseball.png" width="400px;" height="400px;"/>
         </div>
     </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6" style="text-align: center">
+          <h2>Storyboard 1</h2>
+          <img src="storyboard.png" alt="" width="500px;" height="400px;"/>
+          </div>
+          <div class="col-sm-6" style="text-align: center">
+                      <h2>Storyboard 2</h2>
+            <img src="storyboard2.png" alt="" width="500px;" height="400px;"/>
+            </div>
+        </div>
+      </div>
 
-    <br />
+    <br /><br /><br />
 
     <div class="container">
         <h2>Visualization: Interactive Scatter Plot</h2>
